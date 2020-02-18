@@ -46,3 +46,15 @@
   // map 키와 값을 <entry>로 묶고 키는 <key>로 묶고 <value>에 키 값을 입력, 값은 <value>에 입력해준다.            
 </bean>
 ```
+## 빈(Bean)의 범위
+- 싱글톤(Singleton)
+  - 스프링 컨테이너에서 생성된 빈(Bean)객체의 경우 기본적으로 한 개만 생성이 된다.
+  - getBean() 메소드로 호출될 때 동일한 객체가 반환된다.
+  ![싱글톤](https://user-images.githubusercontent.com/58713853/74734779-9a8f3200-5292-11ea-9177-6bcb5def62f2.PNG)
+- 프로토타입(Prototype)
+  - 싱글톤 범위와 반대의 개념
+  - 스프링 설정 파일에서 빈(Bean)객체를 정의할 때 scope속성을 명시해 주어야한다.
+
+```java
+<bean id="dependencyBean" class="scope.ex.DependencyBean" scope="prototype">
+```
