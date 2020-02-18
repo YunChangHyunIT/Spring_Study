@@ -34,9 +34,11 @@
 - pom.xml과는 다른 resources에서 관리하는 보조적인 역할의 파일이다. 
 - new를 이용해 객체를 생성하지 않고 스프링컨테이너에 xml에 명령어를 이용하여 객체를 생성한다.(메모리에 로딩이 된다.)
   - 메모리에서 특별하게 관리되는 스프링 컨테이너에 로딩이 된다.
+  
 
 ```java
 // resources폴더에 applicationContext.xml 이라는 파일을 만들었다고 가정
+// 앞부분 생략
 // <bean id="사용할 아이디" class="패키지.클래스명(풀네임)" />
 <bean id="twalk" class="lec03Pjt001.TransportationWalk" />  // 객체를 컨테이너에 로딩 한다.(객체를 생성)
 
@@ -55,4 +57,23 @@ public static void main(String[] args) {
 		
 		ctx.close();  // 자바에서는 외부리소스를 쓰면 반환을 해주어야한다.
 	}
+```
+
+#### 스프링 설정 파일 분리
+- 하나의 스프링 파일에 모든 객체들을 명시하게 되면 파일의 길이가 너무 길어진다.
+	- 기능별로 분류하는 것이 좋다.
+
+```java
+// resources폴더에 applicationContext.xml 이라는 파일에 기능 부분, DB부분, 기타 정보 부분이 있다고 가정
+// 이 파일을 기능/DB/기타정보 로 나누어서 appCtx1.xml, appCtx2.xml, appCtx3.xml로 분리 해준다.
+
+
+public static void main(String[] args) {
+	String[] appCtxs = {"classpath:appCtx1.xml", "classpath:appCtx2.xml", "classpath:appCtx3,xml"};	
+	// 배열을 이용해 설정파일 이름을 저장한다.
+	GenericXmlApplicationContext ctx = new GenericXmlApplicationContext(appCtxs) // 그 배열을 인자로 넣어준다.
+
+	// 다른 부분은 동일
+	// appCtx1.xml에 appCtx2와 appCtx3을 import해서 appCtx1만 가져와 사용할 수도 있지만 위의 방법이 더 많이 쓰인다고 한다.
+}
 ```
