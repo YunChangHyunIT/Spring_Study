@@ -142,3 +142,60 @@ public class WordRegisterServiceUseAutowired {
   ....  
 }
 ```
+
+## 의존객체 선택 주입
+- @Autowired를 사용할 때, 동일한 객체가 2개 이상인 경우 스프링 컨테이너는 자동주입 대상 객체를 판단하지 못해서 Exception을 발생시킨다.
+- 속성이나 메소드,생성자의 인자 이름과 xml에서의 id를 맞춰주면 해당 객체를 주입하게 되지만 그다지 좋은 방법은 아니다.
+- @Qualifier를 사용한다.
+
+### @Qualifier
+- @Qualifier를 사용해 이름을 명시해줌으로써 어떤 객체를 사용할지 선택할 수 있다.
+
+```java
+// WordRegisterService.java
+public class WordRegisterServiceUseAutowired {
+  private WordDao wordDao;
+  
+	@Autowired
+	@Qualifier("usedDao")	// @Qualifier를 사용해 이름을 명시해준다.
+	public WordRegisterService(WordDao wordDao) {
+		this.wordDao = wordDao;
+	}
+  ....  
+}
+```
+
+```java
+<context:annotation-config />
+
+// <bean id="wordDao" class="com.word.dao.WordDao" />  // 생성자의 인자와 id가 같으면 이 객체를 선택하게 되지만 좋은 방법이 아니다.
+
+<bean id="wordDao1" class="com.word.dao.WordDao">  
+	<qualifier value="usedDao"/>	// @Qualifier에서 설정한 이름과 맞춰 qualifier 태그를 명시해준다.
+</bean>
+<bean id="wordDao2" class="com.word.dao.WordDao" />  
+<bean id="wordDao3" class="com.word.dao.WordDao" />  
+
+<bean id="registerService" class="com.word.service.WordRegisterService">
+```
+
+#### 의존객체 자동주입 체크
+- @Autowired를 사용해서 의존객체 자동주입을 할 때, 스프링 설정파일에 해당하는 객체가 없을 경우 사용한다.
+	- 초보적인 프로그래밍 실수라 거의 사용하진 않는다.
+- @Autowired(required=false)로 명시해준다.
+
+```java
+// WordRegisterService.java
+public class WordRegisterServiceUseAutowired {
+  private WordDao wordDao;
+  
+	@Autowired(required=false) // xml 스프링 설정파일에 해당 객체타입이 없어도 실행이 되게 해준다.
+	public WordRegisterService(WordDao wordDao) {
+		this.wordDao = wordDao;
+	}
+  ....  
+}
+```
+### @inject
+- @Autowired와 동일하게 주입하려고 하는 객체의 타입이 일치하는 객체를 자동으로 주입한다.
+- @Autowired와 다르게 required 속성을 지원하지 않는다.
