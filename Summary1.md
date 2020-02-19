@@ -38,7 +38,12 @@
 
 ```java
 // resources폴더에 applicationContext.xml 이라는 파일을 만들었다고 가정
-// 앞부분 생략
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+ 		http://www.springframework.org/schema/beans/spring-beans.xsd"> 
+// 스프링 설정 파일을 사용하기 위한 기본적인 네임스페이스 스키마로 보통 복사해서 사용한다.
+		
 // <bean id="사용할 아이디" class="패키지.클래스명(풀네임)" />
 <bean id="twalk" class="lec03Pjt001.TransportationWalk" />  // 객체를 컨테이너에 로딩 한다.(객체를 생성)
 
