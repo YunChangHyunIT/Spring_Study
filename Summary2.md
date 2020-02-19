@@ -97,10 +97,12 @@
 - appCtxUseAutowired.xml이라는 스프링 설정 파일과 WordDao를 생성자로 갖는 WordRegisterService.java라는 자바파일이 있다고 가정한다.
 ```java
 // appCtxUseAutowired.xml
-xmlns:context="http://www.springframework.org/schema/context" // Autowired,Resource를 사용하기위한 네임스페이스를 명시해준다.
+xmlns:context="http://www.springframework.org/schema/context" 
+// Autowired,Resource를 사용하기위한 네임스페이스를 명시해준다.
 
-xsi:schemaLocation= http://www.springframework.org/schema/context // xsi:schemaLocation=에도 이 네임스페이스를 명시해준다.
+xsi:schemaLocation= http://www.springframework.org/schema/context 
     http://www.springframework.org/schema/context/spring-context.xsd">
+// xsi:schemaLocation=에도 이 네임스페이스를 명시해준다.
 // 나머지 네임스페이스는 생략
 ```
 
@@ -109,6 +111,7 @@ xsi:schemaLocation= http://www.springframework.org/schema/context // xsi:schemaL
 <bean id="wordDao" class="com.word.dao.WordDao" />  
 // @Resource를 사용하면 WordRegisterService클래스의 wordDao속성과 id가 같은 부분에 객체를 주입해주게 된다.
 // @Autowired를 사용할 땐, WordDao객체와 타입이 일치하는 객체를 주입해주게 된다.
+
 <bean id="registerService" class="com.word.service.WordRegisterService">
 // <constructor-arg ref="wordDao" />  // 기존 생성자에 직접 명시해주는 방법, Autowired,Resource를 사용시 명시해주지 않아도 된다.
 ```
