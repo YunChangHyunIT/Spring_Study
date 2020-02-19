@@ -51,8 +51,8 @@
 ```java
 public static void main(String[] args) {
     // 기존의 객체 생성 방식
-//		TransportationWalk transportationWalk = new TransportationWalk(); 
-//		transportationWalk.move();
+    //		TransportationWalk transportationWalk = new TransportationWalk(); 
+    //		transportationWalk.move();
 	}
 ```
 
