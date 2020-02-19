@@ -1,4 +1,4 @@
-# 2Day
+# Summary2
 
 ## DI(Dependency injection)
 - 의존 주입
@@ -57,4 +57,28 @@
 
 ```java
 <bean id="dependencyBean" class="scope.ex.DependencyBean" scope="prototype">
+```
+
+## 의존객체 자동 주입
+- 스프링 설정 파일에서 의존 객체를 주입할 때 <constructor-org> 또는 <property> 태그로 의존 대상 객체를 명시하지 않아도 스프링 컨테이너가 자동으로 필요한 의존 대상 객체를 찾아서 주입해 주는 기능
+- @Autowired, @Resource 어노테이션을 이용해서 쉽게 구현할 수 있다.
+
+### @Autowired
+- 주입하려고 하는 객체의 타입이 일치하는 객체를 자동으로 주입한다.
+- 해당하는 코드위에 @Autowired를 명시해 준다.
+- xml파일에 xmlns:context="http://www.springframework.org/schema/context" 네임스페이스 스키마를 명시해준다.
+- xml파일에 <context:annotation-config /> 태그를 명시해준다.
+
+#### @Autowired 예제
+- appCtxUseAutowired.xml이라는 스프링 설정 파일과 WordDao를 생성자로 갖는 WordRegisterService.java라는 자바파일이 있다고 가정한다.
+```java
+// appCtxUseAutowired.xml
+xmlns:context="http://www.springframework.org/schema/context" // Autowired를 사용하기위한 네임스페이스를 명시해준다.
+// 나머지 네임스페이스는 생략
+
+<context:annotation-config /> // 이 태그를 씀으로써 @Autowired를 사용할 수 있다.
+<bean id="wordDao" class="com.word.dao.WordDao" />
+<bean id="registerService" class="com.word.service.WordRegisterService">
+// <constructor-arg ref="wordDao" />  // 기존 생성자에 직접 명시해주는 방법
+
 ```
