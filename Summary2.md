@@ -68,17 +68,42 @@
 - 해당하는 코드위에 @Autowired를 명시해 준다.
 - xml파일에 xmlns:context="http://www.springframework.org/schema/context" 네임스페이스 스키마를 명시해준다.
 - xml파일에 <context:annotation-config /> 태그를 명시해준다.
+- 생성자뿐만 아니라 속성,메소드에도 붙일 수 있다.
+  - 속성과 메소드에 @Autowired를 사용할 때는 디폴트 생성자가 반드시 있어야 한다.
+  
+### @Resource
+- @Autowired와 비슷하지만 객체의 타입을 보는 것이 아니라, 객체의 id를 보고 메소드인자나 속성이름과 같은 객체를 주입해준다.
+- 생성자에는 사용할 수 없고 속성,메소드에만 사용할 수 있다.
+  - 마찬가지로 디폴트 생성자가 반드시 필요하다.
 
-#### @Autowired 예제
+#### @Autowired, @Resource 예제
 - appCtxUseAutowired.xml이라는 스프링 설정 파일과 WordDao를 생성자로 갖는 WordRegisterService.java라는 자바파일이 있다고 가정한다.
 ```java
 // appCtxUseAutowired.xml
-xmlns:context="http://www.springframework.org/schema/context" // Autowired를 사용하기위한 네임스페이스를 명시해준다.
+xmlns:context="http://www.springframework.org/schema/context" // Autowired,Resource를 사용하기위한 네임스페이스를 명시해준다.
+
+xsi:schemaLocation= http://www.springframework.org/schema/context // xsi:schemaLocation=에도 이 네임스페이스를 명시해준다.
+    http://www.springframework.org/schema/context/spring-context.xsd">
 // 나머지 네임스페이스는 생략
 
-<context:annotation-config /> // 이 태그를 씀으로써 @Autowired를 사용할 수 있다.
-<bean id="wordDao" class="com.word.dao.WordDao" />
+<context:annotation-config /> // 이 태그를 씀으로써 Autowired,Resource를 사용할 수 있다.
+<bean id="wordDao" class="com.word.dao.WordDao" />  
+// @Resource를 사용하면 WordRegisterService클래스의 wordDao속성과 id가 같은 부분에 객체를 주입해주게 된다.
+// @Autowired를 사용할 땐, WordDao객체와 타입이 일치하는 객체를 주입해주게 된다.
 <bean id="registerService" class="com.word.service.WordRegisterService">
-// <constructor-arg ref="wordDao" />  // 기존 생성자에 직접 명시해주는 방법
+// <constructor-arg ref="wordDao" />  // 기존 생성자에 직접 명시해주는 방법, Autowired,Resource를 사용시 명시해주지 않아도 된다.
 
+// WordRegisterService.java
+public class WordRegisterServiceUseAutowired {
+  @Resource  // @Resource 사용할 속성,메소드 윗부분에 명시해준다.
+  private WordDao wordDao;
+  
+  public WordRegisterService() {} // 속성,메소드에 @Autowired나 @Resource를 사용하려면 반드시 디폴트 생성자를 만들어 주어야한다.
+//  @Autowired  // @Autowired를 사용할 윗부분에 명시해준다.
+	public WordRegisterService(WordDao wordDao) {
+		this.wordDao = wordDao;
+	}
+  
+  ....  
+}
 ```
