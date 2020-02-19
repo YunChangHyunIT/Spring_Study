@@ -46,12 +46,18 @@
 		
 // <bean id="사용할 아이디" class="패키지.클래스명(풀네임)" />
 <bean id="twalk" class="lec03Pjt001.TransportationWalk" />  // 객체를 컨테이너에 로딩 한다.(객체를 생성)
+```
 
+```java
 public static void main(String[] args) {
-		
     // 기존의 객체 생성 방식
 //		TransportationWalk transportationWalk = new TransportationWalk(); 
 //		transportationWalk.move();
+	}
+```
+
+```java
+public static void main(String[] args) {
 		
     // 스프링 객체 생성 방식
 		GenericXmlApplicationContext ctx = 
