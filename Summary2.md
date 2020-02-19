@@ -109,8 +109,8 @@ xsi:schemaLocation= http://www.springframework.org/schema/context
 ```java
 <context:annotation-config /> // 이 태그를 씀으로써 Autowired,Resource를 사용할 수 있다.
 <bean id="wordDao" class="com.word.dao.WordDao" />  
-// @Resource를 사용하면 WordRegisterService클래스의 wordDao속성과 id가 같은 부분에 객체를 주입해주게 된다.
-// @Autowired를 사용할 땐, WordDao객체와 타입이 일치하는 객체를 주입해주게 된다.
+// @Resource를 사용하면 WordRegisterService클래스의 wordDao속성과 id가 같은 객체를 주입해주게 된다.
+// @Autowired를 사용할 땐, 생성자 인자인 WordDao객체와 타입이 일치하는 객체를 주입해주게 된다.
 
 <bean id="registerService" class="com.word.service.WordRegisterService">
 // <constructor-arg ref="wordDao" />  // 기존 생성자에 직접 명시해주는 방법, Autowired,Resource를 사용시 명시해주지 않아도 된다.
