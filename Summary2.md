@@ -199,3 +199,21 @@ public class WordRegisterServiceUseAutowired {
 ### @inject
 - @Autowired와 동일하게 주입하려고 하는 객체의 타입이 일치하는 객체를 자동으로 주입한다.
 - @Autowired와 다르게 required 속성을 지원하지 않는다.
+
+#### @Named
+- @inject에서 의존객체를 선택할 때 사용하는 어노테이션
+- @Qualifier와 동일한 기능을 한다.
+
+```java
+// WordRegisterService.java
+public class WordRegisterServiceUseAutowired {
+  private WordDao wordDao;
+  
+	@inject			// @Autowired와 같은 기능 (다만, required 속성 없음)
+	@Named("usedDao")	// @Named 사용해 이름을 명시해준다.
+	public WordRegisterService(WordDao wordDao) {
+		this.wordDao = wordDao;
+	}
+  ....  
+}
+```
