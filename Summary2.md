@@ -14,37 +14,54 @@
 - 생성자, setter, list, map을 통한 주입이 있다.
 
 ```java
-// applicationContext.xml 파일안에서 객체를 생성할 때 Dao객체를 주입
+// applicationContext.xml 파일안에서 Dao객체를 생성
 <bean id="studentDao" class="ems.member.dao.StudentDao"></bean>
-
+```
+```java
 <bean id="registerService" class="ems.member.service.StudentRegister">
   <constructor-arg ref="studentDao"></constructor-arg>  
-  // StudentRegister를 만들때 StudentDao를 참조한다. (생성자를 통한 주입)
-  
-  // <property name="userId" value="scott" /> // setUserId라는 setter가 있다고 가정할 때,
-  // setUserId의 set을 빼고 U를 소문자로 바꾼 값을 property name으로 그 인자에 들어갈 값을 value에 적는다 (setter를 이용한 주입)
-  
-  // <property name="userId">
-  //    <list>
-  //       <value>cat</value>
-  //       <value>dog</value>
-  //       <value>bird</value>
-  //    </ist>
-  //  </property> // setUserId가 list를 인자로 갖는 setter일 때, 
-  // 마찬가지로 setUserId의 set을 빼고 U를 소문자로 바꾼 값을 property name에 넣은후 리스트의 값을든 <list> <value> 로 넣는다.
-    
-  // <property name="userId"> 
-  //    <map>
-  //      <entry>
-  //        <key>
-  //           <value>Yun</value>
-  //        </key>
-  //           <value>ChangHyun</value>
-  //      </entry>
-  //    </map>
-  //  </property>  // setUserId가 map을 인자로 갖는 setter일 때,
-  // map 키와 값을 <entry>로 묶고 키는 <key>로 묶고 <value>에 키 값을 입력, 값은 <value>에 입력해준다.            
 </bean>
+  // StudentRegister를 만들때 StudentDao를 참조한다. (생성자를 통한 주입)
+```
+  
+```java
+<bean id="registerService" class="ems.member.service.StudentRegister">
+  <property name="userId" value="scott" /> 
+</bean>
+  // setUserId라는 setter가 있다고 가정할 때,
+  // setUserId의 set을 빼고 U를 소문자로 바꾼 값을 property name으로 그 인자에 들어갈 값을 value에 적는다 (setter를 이용한 주입)
+```
+  
+```java
+<bean id="registerService" class="ems.member.service.StudentRegister">
+   <property name="userId">
+      <list>
+         <value>cat</value>
+         <value>dog</value>
+         <value>bird</value>
+      </ist>
+    </property> 
+</bean
+// setUserId가 list를 인자로 갖는 setter일 때, 
+// 마찬가지로 setUserId의 set을 빼고 U를 소문자로 바꾼 값을 property name에 넣은후 리스트의 값을든 <list> <value> 로 넣는다.
+```
+    
+```java
+<bean id="registerService" class="ems.member.service.StudentRegister">
+   <property name="userId"> 
+      <map>
+        <entry>
+          <key>
+             <value>Yun</value>
+          </key>
+             <value>ChangHyun</value>
+        </entry>
+      </map>
+    </property>  
+</bean>
+// setUserId가 map을 인자로 갖는 setter일 때,
+// map 키와 값을 <entry>로 묶고 키는 <key>로 묶고 <value>에 키 값을 입력, 값은 <value>에 입력해준다.            
+
 ```
 ## 빈(Bean)의 범위
 - 싱글톤(Singleton)
@@ -85,25 +102,40 @@ xmlns:context="http://www.springframework.org/schema/context" // Autowired,Resou
 xsi:schemaLocation= http://www.springframework.org/schema/context // xsi:schemaLocation=에도 이 네임스페이스를 명시해준다.
     http://www.springframework.org/schema/context/spring-context.xsd">
 // 나머지 네임스페이스는 생략
+```
 
+```java
 <context:annotation-config /> // 이 태그를 씀으로써 Autowired,Resource를 사용할 수 있다.
 <bean id="wordDao" class="com.word.dao.WordDao" />  
 // @Resource를 사용하면 WordRegisterService클래스의 wordDao속성과 id가 같은 부분에 객체를 주입해주게 된다.
 // @Autowired를 사용할 땐, WordDao객체와 타입이 일치하는 객체를 주입해주게 된다.
 <bean id="registerService" class="com.word.service.WordRegisterService">
 // <constructor-arg ref="wordDao" />  // 기존 생성자에 직접 명시해주는 방법, Autowired,Resource를 사용시 명시해주지 않아도 된다.
+```
 
+```java
+// WordRegisterService.java
+public class WordRegisterServiceUseAutowired {
+  private WordDao wordDao;
+  
+	@Autowired	// @Autowired를 사용할 윗부분에 명시해준다.
+	public WordRegisterService(WordDao wordDao) {
+		this.wordDao = wordDao;
+	}
+  ....  
+}
+```
+
+```java
 // WordRegisterService.java
 public class WordRegisterServiceUseAutowired {
   @Resource  // @Resource 사용할 속성,메소드 윗부분에 명시해준다.
   private WordDao wordDao;
   
-  public WordRegisterService() {} // 속성,메소드에 @Autowired나 @Resource를 사용하려면 반드시 디폴트 생성자를 만들어 주어야한다.
-//  @Autowired  // @Autowired를 사용할 윗부분에 명시해준다.
+  	public WordRegisterService() {} // 속성,메소드에 @Autowired나 @Resource를 사용하려면 반드시 디폴트 생성자를 만들어 주어야한다.
 	public WordRegisterService(WordDao wordDao) {
 		this.wordDao = wordDao;
 	}
-  
   ....  
 }
 ```
