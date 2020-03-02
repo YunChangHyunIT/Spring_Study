@@ -39,7 +39,7 @@
          <value>cat</value>
          <value>dog</value>
          <value>bird</value>
-      </ist>
+      </list>
     </property> 
 </bean
 // setUserId가 list를 인자로 갖는 setter일 때, 
