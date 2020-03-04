@@ -48,17 +48,17 @@
 
 ![Controller객체](https://user-images.githubusercontent.com/58713853/75904054-dd9df780-5e85-11ea-80bd-6b6957793032.PNG)
 
-#### RequestMapping
+##### RequestMapping
 
 Controller객체의 메소드에 @RequestMapping 어노테이션을 사용 후 그 안에 요청한 값을 넘겨준다.
 
 ![RequestMapping](https://user-images.githubusercontent.com/58713853/75904056-de368e00-5e85-11ea-9033-e519414d8438.PNG)
 
-#### Model 타입의 파라미터
+##### Model 타입의 파라미터
 
 ![Model타입](https://user-images.githubusercontent.com/58713853/75904044-db3b9d80-5e85-11ea-8560-fc1dbaad611d.PNG)
 
-### View 객체
+#### View 객체
 
 - 해당하는 적합한 뷰를 찾아주는 InternalResourceViewResolver라는 Bean 객체를 스프링 설정파일에 만든다.
 - ReqeustMapping에서 매핑 되는 리턴값과 prefix, suffix 값을 합쳐 jsp 파일로 만들어준다.
