@@ -63,6 +63,7 @@ Controller객체의 메소드에 @RequestMapping 어노테이션을 사용 후 �
 - 해당하는 적합한 뷰를 찾아주는 InternalResourceViewResolver라는 Bean 객체를 스프링 설정파일에 만든다.
 - ReqeustMapping에서 매핑 되는 리턴값과 prefix, suffix 값을 합쳐 jsp 파일로 만들어준다.
   - prefix + retur값 + suffix
+    - 이 때, 리턴 타입이 void 일 경우 ViewResolver가 url과 똑같은 이름으로 view이름을 설정한다.
 
 ![View객체](https://user-images.githubusercontent.com/58713853/75904046-dc6cca80-5e85-11ea-9211-7edd6a331d6b.PNG)
 
