@@ -4,7 +4,7 @@
 
 ### 프로젝트 전체 구조
 
-![1](https://user-images.githubusercontent.com/58713853/101177159-d614b480-368a-11eb-8a2d-b3158e2facf2.PNG)]
+![1](https://user-images.githubusercontent.com/58713853/101177159-d614b480-368a-11eb-8a2d-b3158e2facf2.PNG)
 
 ### web.xml
 
