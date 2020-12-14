@@ -9,6 +9,8 @@
 ![1](https://user-images.githubusercontent.com/58713853/102049153-b5cfbd00-3e23-11eb-939d-c5c5847b4311.PNG)
 
 ### pom.xml 및 이클립스 import
+- pom, web, root-context, servlet-context는 Summary7에서 만든 것을 복붙 한다. (여러 네임스페이스들을 전부 외워 입력할 수 없기 때문에)
+- pom.xml을 복붙 했을 때 groupId와 artifactId로 이루어진 이름으로 패키지를 만든다 ( 여기서는 com.bs.lec16 )
 
 ![2](https://user-images.githubusercontent.com/58713853/102049156-b6685380-3e23-11eb-8ef1-b74a8c364832.PNG)
 
@@ -19,7 +21,6 @@
 ![4](https://user-images.githubusercontent.com/58713853/102049160-b700ea00-3e23-11eb-8cae-e5b824e989d3.PNG)
 
 ### 스프링 설정 파일(servlet-context.xml) 작성
-- 이 때, web, root-context, servlet-context는 Summary7에서 만든 것을 복붙 한다. (여러 네임스페이스들을 전부 외워 입력할 수 없기 때문에)
 
 ![5](https://user-images.githubusercontent.com/58713853/102049165-b7998080-3e23-11eb-86fa-76b43c9d764f.PNG)
 
