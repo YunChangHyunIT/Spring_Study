@@ -153,6 +153,7 @@
 - member에 해당하는 속성값들이 있다.
 
 ```java
+// Member.java
 package com.bs.lec17.member;
 
 public class Member {
@@ -210,6 +211,7 @@ public class Member {
 - 기능을 하게 만들어주는 컨트롤러를 구현해 준다.
 
 ```java
+// MemberController.java
 package com.bs.lec17.member.controller;
 
 import javax.annotation.Resource;
@@ -227,19 +229,30 @@ import com.bs.lec17.member.service.MemberService;
 @Controller
 public class MemberController {
 
-	@Resource(name="memService")
+	// MemberService를 사용하는 방법
+	
+	// MemberService service = new MemberService();	// 1. 스프링을 사용하지 않을 때 사용하는 방법
+	
+	// 2. servlet-context에 <beans:bean id="service" class="com.bs.lec17.member.service.MemberService"></beans:bean>
+	// 를 작성한 후 @Autowired를 사용하는 방법
+	
+	// 3. servlet-context에 작성한 beans를 삭제해 주고 MemberSerivce에 @Service를 작성한 후 @Autowired를 사용하는 방법 (실무에서 가장 많이 사용)
+	
+	@Resource(name="memService")	// @Service("memService") 처럼 이름을 지정한 서비스를 호출할 수 있다.
 	MemberService service;
 	
+	// memjoin이라는 요청이오면 HTML FORM태그로 부터 받은 속성들을 받아서 서비스를 이용해서 등록을 하는 절차
 	@RequestMapping(value="/memJoin", method=RequestMethod.POST)
 	public String memJoin(Model model, HttpServletRequest request) {
-		String memId = request.getParameter("memId");
+		String memId = request.getParameter("memId");	
 		String memPw = request.getParameter("memPw");
 		String memMail = request.getParameter("memMail");
 		String memPhone1 = request.getParameter("memPhone1");
 		String memPhone2 = request.getParameter("memPhone2");
 		String memPhone3 = request.getParameter("memPhone3");
 		
-		service.memberRegister(memId, memPw, memMail, memPhone1, memPhone2, memPhone3);
+		service.memberRegister(memId, memPw, memMail, memPhone1, memPhone2, memPhone3);	
+		// MemberService.java에 있는 memberRegister 함수에 속성값을 넣어 실행 준다.
 		
 		model.addAttribute("memId", memId);
 		model.addAttribute("memPw", memPw);
@@ -276,19 +289,22 @@ public class MemberController {
 ### 서비스 객체 구현
 
 ```java
+// IMemberSerive.java (MemberService의 인터페이스)
 package com.bs.lec17.member.service;
 
 import com.bs.lec17.member.Member;
 
 public interface IMemberService {
 	void memberRegister(String memId, String memPw, String memMail, String memPhone1, String memPhone2, String memPhone3);
-	Member memberSearch(String memId, String memPw);
-	void memberModify();
-	void memberRemove();
+	// 회원등록
+	Member memberSearch(String memId, String memPw); // 회원검색
+	void memberModify();	// 회원 수정
+	void memberRemove();	// 회원 삭제
 }
 ```
 
 ```java
+// MemberSerive.java
 package com.bs.lec17.member.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -299,17 +315,18 @@ import org.springframework.stereotype.Service;
 import com.bs.lec17.member.Member;
 import com.bs.lec17.member.dao.MemberDao;
 
-//@Service
-//@Service("memService")
-//@Component
+//@Service	// 내가 만드는 Service객체마다 이 어노테이션을 붙여주면 자동적으로 스프링 컨테이너에 등록 된다. 서비스에서는 @Service가 가독성이 좋다
+//@Service("memService")	// 이름을 지정해줄 수 있지만 일반적으로 이름을 지정하지 않고 사용한다.
+//@Component	// Service와 같은 기능
 //@Component("memService")
-//@Repository
+//@Repository	// Service와 같은 기능
 @Repository("memService")
 public class MemberService implements IMemberService {
 
 	@Autowired
 	MemberDao dao;
 	
+	// 매개변수로 회원정보에 필요한 속성들을 받아 출력해준다.
 	@Override
 	public void memberRegister(String memId, String memPw, String memMail,
 			String memPhone1, String memPhone2, String memPhone3) {
@@ -357,9 +374,10 @@ import com.bs.lec17.member.Member;
 
 public interface IMemberDao {
 	void memberInsert(String memId, String memPw, String memMail, String memPhone1, String memPhone2, String memPhone3);
-	Member memberSelect(String memId, String memPw);
-	void memberUpdate();
-	void memberDelete();
+	// 멤버정보를 데이터베이스에 넣는 기능
+	Member memberSelect(String memId, String memPw);	// 멤버정보를 데이터베이스에서 찾는 기능
+	void memberUpdate();	// 멤버정보를 데이터베이스에 수정 하는 기능
+	void memberDelete();	// 멤버정보를 데이터베이스에서 삭제하는 기능
 }
 ```
 
@@ -375,7 +393,7 @@ import org.springframework.stereotype.Repository;
 
 import com.bs.lec17.member.Member;
 
-//@Component
+//@Component	//	@Service와 같은 기능을 한다.
 @Repository
 public class MemberDao implements IMemberDao {
 
@@ -401,8 +419,8 @@ public class MemberDao implements IMemberDao {
 		member.setMemPhone2(memPhone2);
 		member.setMemPhone3(memPhone3);
 		
-		dbMap.put(memId, member);
-		
+		dbMap.put(memId, member);	// Map을 이용해 Key에 memId, value에 member 객체를 넣어준다.
+		 
 		Set<String> keys = dbMap.keySet();
 		Iterator<String> iterator = keys.iterator();
 		
